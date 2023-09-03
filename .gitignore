@@ -1,3 +1,6 @@
+.*
+!/.gitignore
+
 #the build
 cub3D
 

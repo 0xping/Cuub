@@ -10,14 +10,14 @@ BOLD = \033[1m
 # Compiler and flags
 CC = cc
 CFLAGS = -Wall -Wextra -Werror #-fsanitize=address
-LDFLAGS =
+LDFLAGS = -lm
 
 # Target name
 NAME = cub3D
 LIB = ./lib/lib.a
 
 # Source files
-LIB_SRC = $(wildcard ./lib/*.c ./src/**/*.c)
+LIB_SRC = $(wildcard ./lib/*.c ./lib/**/*.c)
 SRC = $(wildcard ./src/*.c ./src/**/*.c)
 OBJ = $(SRC:.c=.o)
 

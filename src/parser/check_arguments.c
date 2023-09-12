@@ -1,19 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lib.h                                              :+:      :+:    :+:   */
+/*   check_arguments.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aait-lfd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/01 18:13:07 by aait-lfd          #+#    #+#             */
-/*   Updated: 2023/09/03 11:33:38 by aait-lfd         ###   ########.fr       */
+/*   Created: 2023/09/12 23:04:21 by aait-lfd          #+#    #+#             */
+/*   Updated: 2023/09/12 23:04:43 by aait-lfd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIB_H
-# define LIB_H
+#include "../../includes/inc.h"
 
-# include "../lib/get_next_line/get_next_line.h"
-# include "../lib/libft/libft.h"
-
-#endif
+void	check_arguments(int ac, char *av[])
+{
+	if (ac != 2)
+		ft_exit(ERR_ARG_COUNT, 1);
+	if (!ft_strrchr(av[1], '.') || ft_strcmp("cub", ft_strrchr(av[1], '.') + 1))
+		ft_exit(ERR_FILE_EXT, 1);
+}

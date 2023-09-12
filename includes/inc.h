@@ -6,7 +6,7 @@
 /*   By: aait-lfd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 18:12:30 by aait-lfd          #+#    #+#             */
-/*   Updated: 2023/09/01 18:29:42 by aait-lfd         ###   ########.fr       */
+/*   Updated: 2023/09/06 15:05:09 by aait-lfd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,14 @@
 # define TEXT_BOLD "\x1b[1m"
 # define RESET_ALL "\x1b[0m"
 
+/*---------------------- ERRORS ------------------*/
+# define ERR_ARG_COUNT "./cub3D take 1 Argument, no less no more."
+# define ERR_FILE_EXT "the file should be in .cub format"
+
 # include <dirent.h>
 # include <fcntl.h>
 # include <limits.h>
+# include <math.h>
 # include <signal.h>
 # include <stdbool.h>
 # include <stdio.h>
@@ -43,6 +48,7 @@
 /*---------*/
 # include "./lib.h"
 /*--------*/
-/*--------*/
+# include "./parser.h"
+# include "./utils.h"
 
 #endif

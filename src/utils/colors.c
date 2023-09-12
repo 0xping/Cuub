@@ -6,7 +6,7 @@
 /*   By: aait-lfd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 12:23:47 by aait-lfd          #+#    #+#             */
-/*   Updated: 2023/09/12 23:44:47 by aait-lfd         ###   ########.fr       */
+/*   Updated: 2023/09/13 00:17:44 by aait-lfd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	get_color_from_string(char *color)
 		i++;
 	if (i != 3)
 		ft_exit("Parse error", 1);
-	result = rgba_color(0, ft_atoi(sp[0]), ft_atoi(sp[1]), ft_atoi(sp[2]));
+	result = rgba_color(0, arg_to_int(sp[0]), arg_to_int(sp[1]), arg_to_int(sp[2]));
 	return (free_double_ptr((void **)sp), result);
 }
 

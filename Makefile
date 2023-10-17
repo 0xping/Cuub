@@ -9,8 +9,16 @@ BOLD = \033[1m
 
 # Compiler and flags
 CC = cc
-CFLAGS = -Wall -Wextra -Werror #-fsanitize=address
-LDFLAGS = -lm
+CFLAGS = -Wall -Wextra -Werror  -fsanitize=address
+
+# Add platform-specific flags
+UNAME = $(shell uname)
+ifeq ($(UNAME),Linux)
+	MLX_FLAGS = -lmlx -lXext -lX11 -lm
+endif
+ifeq ($(UNAME),Darwin)
+	MLX_FLAGS = -lmlx -framework OpenGL -framework AppKit
+endif
 
 # Target name
 NAME = cub3D
@@ -31,9 +39,9 @@ $(LIB) : $(LIB_SRC)
 
 $(NAME): $(SRC) $(LIB)
 	@echo "$(GREEN)⌛ Compiling $(NAME) ...$(END)"
-	@$(CC) $(CFLAGS) $(SRC) $(LIB) $(LDFLAGS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(SRC) $(LIB) $(MLX_FLAGS) -o $(NAME)
 	@echo "$(GREEN)✅ $(NAME) compiled successfully\n$(END)"
-	@echo "To start the game, use: $(YELLOW)$(BOLD)make start$(END)"
+	@echo "To start the game, use: $(YELLOW)$(BOLD)./$(NAME) <path_to_a_valid_map>$(END)"
 
 
 start :

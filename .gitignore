@@ -1,4 +1,6 @@
 .*
+.vscode
+cub3D
 !/.gitignore
 
 #the build

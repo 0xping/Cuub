@@ -14,7 +14,7 @@
 
 void	ft_exit(char *msg, int err)
 {
-	ft_putstr_fd(COLOR_RED" Error\n    ", 2);
+	ft_putstr_fd(COLOR_RED " Error\n    ", 2);
 	ft_putendl_fd(msg, 2);
 	exit(err);
 }

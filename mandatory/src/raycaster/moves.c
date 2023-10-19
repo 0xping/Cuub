@@ -6,7 +6,7 @@
 /*   By: aait-lfd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 21:37:58 by aait-lfd          #+#    #+#             */
-/*   Updated: 2023/10/17 22:07:46 by aait-lfd         ###   ########.fr       */
+/*   Updated: 2023/10/19 03:53:55 by aait-lfd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,17 @@ void	ft_move_left_or_right(t_data *data, int direction)
 {
 	int	x;
 	int	y;
+	int tmp;
 
 	x = data->player_point.x;
+	tmp = x;
 	y = data->player_point.y;
 	x += round(cos(data->player_angle + PI / 2 * direction) * SPEED);
 	if (data->map[y / CELL_SIZE][x / CELL_SIZE] == '1')
 		return ;
 	y -= round(sin(data->player_angle + PI / 2 * direction) * SPEED);
+	if (data->map[y / CELL_SIZE][tmp / CELL_SIZE] == '1')
+		return ;
 	if (data->map[y / CELL_SIZE][x / CELL_SIZE] == '1')
 		return ;
 	data->player_point.x = x;
@@ -65,13 +69,18 @@ void	ft_move_backward_or_forward(t_data *data, int direction)
 {
 	int	x;
 	int	y;
+	int tmp;
 
 	x = data->player_point.x + round(cos(data->player_angle) * SPEED
 			* direction);
+	tmp = x;
 	y = data->player_point.y;
+	x += round(cos(data->player_angle) * SPEED * direction);
 	if (data->map[y / CELL_SIZE][x / CELL_SIZE] == '1')
 		return ;
 	y -= round(sin(data->player_angle) * SPEED * direction);
+	if (data->map[y / CELL_SIZE][tmp / CELL_SIZE] == '1')
+		return ;
 	if (data->map[y / CELL_SIZE][x / CELL_SIZE] == '1')
 		return ;
 	data->player_point = (t_point){x, y};

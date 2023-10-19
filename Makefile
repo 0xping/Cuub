@@ -21,13 +21,18 @@ ifeq ($(UNAME),Darwin)
 endif
 
 # Target name
-NAME = cub3D
+NAME = cub3d
+BONUS = cub3d_bonus
+
+
 LIB = ./lib/lib.a
 
 # Source files
 LIB_SRC = $(wildcard ./lib/*.c ./lib/**/*.c)
-SRC = $(wildcard ./src/*.c ./src/**/*.c)
+SRC = $(wildcard ./mandatory/src/*.c  ./mandatory/src/**/*.c)
+BONUS_SRC = $(wildcard  ./bonus/src/*.c ./bonus/src/**/*.c)
 OBJ = $(SRC:.c=.o)
+OBJ_BONUS = $(BONUS_SRC:.c=.o)
 
 all : $(NAME)
 
@@ -44,22 +49,25 @@ $(NAME): $(SRC) $(LIB)
 	@echo "To start the game, use: $(YELLOW)$(BOLD)./$(NAME) <path_to_a_valid_map>$(END)"
 
 
-start :
-	clear
-	@./$(NAME)
+bonus : $(BONUS_SRC) $(LIB)
+	@echo "$(GREEN)⌛ Compiling $(BONUS) ...$(END)"
+	@$(CC) $(CFLAGS) $(BONUS_SRC) $(LIB) $(MLX_FLAGS) -o $(BONUS)
+	@echo "$(GREEN)✅ $(BONUS) compiled successfully\n$(END)"
+	@echo "To start the game, use: $(YELLOW)$(BOLD)./$(BONUS) <path_to_a_valid_map>$(END)"
+
 
 clean :
 	@echo "$(RED)\n⌛ removing object files ...$(END)"
-	@rm -rf $(OBJ)
+	@rm -rf $(OBJ) $(OBJ_BONUS)
 	@make -sC  ./lib clean
 	@echo "$(RED)🗑️  objects removed \n$(END)"
 
 fclean : clean
 	@echo "$(RED)\n⌛ removing $(NAME) ...$(END)"
-	@rm -rf $(NAME)
+	@rm -rf $(NAME) $(BONUS)
 	@make -sC  ./lib fclean
 	@echo "$(RED)🗑️  $(NAME) removed \n$(END)"
 
 re : fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re BONUS

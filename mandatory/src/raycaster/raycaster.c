@@ -6,7 +6,7 @@
 /*   By: aait-lfd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 19:42:27 by aait-lfd          #+#    #+#             */
-/*   Updated: 2023/10/17 21:49:23 by aait-lfd         ###   ########.fr       */
+/*   Updated: 2023/10/19 07:08:36 by aait-lfd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,10 @@ void	ft_draw_line(t_data *data, t_point from, t_point end, int direction)
 		cub_size = HIGH;
 	if (cub_size < 0)
 		cub_size = 0;
+
 	while (i < (HIGH / 2) - (cub_size / 2))
 	{
-		my_mlx_pixel_put(&data->img, data->ray_nb, i, 0x009dff); // ceiling
+		my_mlx_pixel_put(&data->img, data->ray_nb, i, data->game_config->ceil_color); // ceiling
 		i++;
 	}
 	tmp = i;
@@ -98,7 +99,7 @@ void	ft_draw_line(t_data *data, t_point from, t_point end, int direction)
 	}
 	while (i < HIGH)
 	{
-		my_mlx_pixel_put(&data->img, data->ray_nb, i, 0x575757); // floor
+		my_mlx_pixel_put(&data->img, data->ray_nb, i, data->game_config->floor_color); // floor
 		i++;
 	}
 }

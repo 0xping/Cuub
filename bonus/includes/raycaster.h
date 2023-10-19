@@ -6,7 +6,7 @@
 /*   By: aait-lfd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 20:01:51 by aait-lfd          #+#    #+#             */
-/*   Updated: 2023/10/19 06:07:13 by aait-lfd         ###   ########.fr       */
+/*   Updated: 2023/10/19 07:13:45 by aait-lfd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct s_data
 	double	last_mouse_x;
 	int		door;
 	int		ray_nb;
+	t_game	*game_config;
 	void	*mlx_ptr;
 	void	*win_ptr;
 	t_img	img;

@@ -6,7 +6,7 @@
 /*   By: aait-lfd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 21:37:58 by aait-lfd          #+#    #+#             */
-/*   Updated: 2023/10/19 06:10:09 by aait-lfd         ###   ########.fr       */
+/*   Updated: 2023/10/19 06:46:21 by aait-lfd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	check_next_move(char **map, t_point player_point, int width, int height)
 
 	i = player_point.y;
 	j = player_point.x;
-	is_valid = (i < width && j < width && i && map[(i + 1) / CELL_SIZE] && j);
+	is_valid = (i < height && j < width && i && map[(i + 1) / CELL_SIZE] && j);
 	is_valid = (is_valid && map[i / CELL_SIZE][(j + 1) / CELL_SIZE]
 			&& ft_strchr("03", map[i / CELL_SIZE][j / CELL_SIZE]));
 	is_valid = (is_valid && ft_strchr("03", map[(i + 1) / CELL_SIZE][j
@@ -64,7 +64,6 @@ int	check_next_move(char **map, t_point player_point, int width, int height)
 	is_valid = (is_valid && ft_strchr("03", map[i / CELL_SIZE][(j + 1)
 			/ CELL_SIZE]) && ft_strchr("03", map[i / CELL_SIZE][(j - 1)
 			/ CELL_SIZE]));
-	printf("2 = %d\n", is_valid);
 	return (is_valid);
 }
 

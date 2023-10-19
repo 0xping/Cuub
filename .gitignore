@@ -1,6 +1,7 @@
 .*
 .vscode
-cub3D
+cub3d
+cub3d_bonus
 !/.gitignore
 
 #the build

@@ -6,7 +6,7 @@
 /*   By: aait-lfd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 20:01:51 by aait-lfd          #+#    #+#             */
-/*   Updated: 2023/10/17 21:45:00 by aait-lfd         ###   ########.fr       */
+/*   Updated: 2023/10/19 07:00:46 by aait-lfd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct s_data
 	int		ray_nb;
 	void	*mlx_ptr;
 	void	*win_ptr;
+	t_game	*game_config;
 	t_img	img;
 }			t_data;
 

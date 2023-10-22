@@ -49,7 +49,9 @@ $(NAME): $(SRC) $(LIB)
 	@echo "To start the game, use: $(YELLOW)$(BOLD)./$(NAME) <path_to_a_valid_map>$(END)"
 
 
-bonus : $(BONUS_SRC) $(LIB)
+bonus : $(BONUS)
+
+$(BONUS) : $(BONUS_SRC) $(LIB)
 	@echo "$(GREEN)⌛ Compiling $(BONUS) ...$(END)"
 	@$(CC) $(CFLAGS) $(BONUS_SRC) $(LIB) $(MLX_FLAGS) -o $(BONUS)
 	@echo "$(GREEN)✅ $(BONUS) compiled successfully\n$(END)"
@@ -70,4 +72,4 @@ fclean : clean
 
 re : fclean all
 
-.PHONY: all clean fclean re BONUS
+.PHONY: all clean fclean re bonus

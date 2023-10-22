@@ -6,7 +6,7 @@
 /*   By: aait-lfd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 15:47:10 by aait-lfd          #+#    #+#             */
-/*   Updated: 2023/10/17 21:42:32 by aait-lfd         ###   ########.fr       */
+/*   Updated: 2023/10/22 17:15:40 by aait-lfd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ typedef struct s_img
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
+	int		width;
+	int		height;
 }			t_img;
 
 int			index_of(char *str, char c);

@@ -6,7 +6,7 @@
 /*   By: aait-lfd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 19:13:26 by aait-lfd          #+#    #+#             */
-/*   Updated: 2023/09/12 23:46:49 by aait-lfd         ###   ########.fr       */
+/*   Updated: 2023/10/22 17:49:54 by aait-lfd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,8 @@ t_game	*parser(int ac, char *av[])
 	check_arguments(ac, av);
 	game = ft_calloc(1, sizeof(t_game));
 	game->file_lines = readfile(av[1]);
+	if (game->file_lines == 0)
+		ft_exit("empty file", 1);
 	t_game_fill(game);
 	if (!check_map(game->map))
 		ft_exit("Parse error", 1);

@@ -6,7 +6,7 @@
 /*   By: aait-lfd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/03 11:32:20 by aait-lfd          #+#    #+#             */
-/*   Updated: 2023/10/17 21:40:34 by aait-lfd         ###   ########.fr       */
+/*   Updated: 2023/10/22 17:42:16 by aait-lfd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ typedef struct s_textures
 	char		*south;
 	char		*west;
 	char		*east;
+	char		*door;
 }				t_textures;
 
 typedef struct s_game

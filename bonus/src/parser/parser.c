@@ -6,7 +6,7 @@
 /*   By: aait-lfd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/01 19:13:26 by aait-lfd          #+#    #+#             */
-/*   Updated: 2023/09/12 23:46:49 by aait-lfd         ###   ########.fr       */
+/*   Updated: 2023/10/22 17:43:57 by aait-lfd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	add_item(char **splitted, t_game *game, int *colors)
 		game->textures.west = ft_strdup(splitted[1]);
 	else if (!ft_strcmp(splitted[0], "EA"))
 		game->textures.east = ft_strdup(splitted[1]);
+	else if (!ft_strcmp(splitted[0], "DO"))
+		game->textures.door = ft_strdup(splitted[1]);
 }
 
 char	**fill_map(char **lines, int *i)
@@ -64,7 +66,7 @@ int	are_textures_and_colors_set(t_game *game, int got_colors)
 {
 	return ((!game->textures.east || !game->textures.north
 			|| !game->textures.south || !game->textures.west
-			|| got_colors != 2));
+			|| !game->textures.door || got_colors != 2));
 }
 
 void	t_game_fill(t_game *game)
@@ -103,6 +105,8 @@ t_game	*parser(int ac, char *av[])
 	check_arguments(ac, av);
 	game = ft_calloc(1, sizeof(t_game));
 	game->file_lines = readfile(av[1]);
+	if (game->file_lines == 0)
+		ft_exit("empty file", 1);
 	t_game_fill(game);
 	if (!check_map(game->map))
 		ft_exit("Parse error", 1);

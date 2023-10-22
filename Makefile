@@ -9,7 +9,7 @@ BOLD = \033[1m
 
 # Compiler and flags
 CC = cc
-CFLAGS = -Wall -Wextra -Werror  -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror #-fsanitize=address
 
 # Add platform-specific flags
 UNAME = $(shell uname)

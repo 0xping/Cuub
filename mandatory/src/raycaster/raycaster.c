@@ -6,51 +6,11 @@
 /*   By: aait-lfd <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 19:42:27 by aait-lfd          #+#    #+#             */
-/*   Updated: 2023/10/19 07:08:36 by aait-lfd         ###   ########.fr       */
+/*   Updated: 2023/10/22 17:06:40 by aait-lfd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/inc.h"
-
-double	get_angle(char player_char)
-{
-	if (player_char == 'E')
-		return (0);
-	else if (player_char == 'N')
-		return (PI / 2);
-	else if (player_char == 'W')
-		return (PI);
-	else if (player_char == 'S')
-		return (3 * PI / 2);
-	return (0);
-}
-
-double	ft_find_player(t_data *data)
-{
-	int		i;
-	int		j;
-	char	player_char;
-
-	i = 0;
-	while (data->map[i])
-	{
-		j = 0;
-		while (data->map[i][j])
-		{
-			if (ft_strchr("NEWS", data->map[i][j]))
-			{
-				data->player_point.x = j * CELL_SIZE + CELL_SIZE / 2;
-				data->player_point.y = i * CELL_SIZE + CELL_SIZE / 2;
-				player_char = data->map[i][j];
-				data->map[i][j] = '0';
-				return (get_angle(player_char));
-			}
-			j++;
-		}
-		i++;
-	}
-	return (0);
-}
 
 int	ft_quit(t_data *vars)
 {
@@ -66,40 +26,70 @@ int	ft_quit(t_data *vars)
 	exit(0);
 }
 
-void	ft_draw_line(t_data *data, t_point from, t_point end, int direction)
+int	ft_get_x(t_point end, int is_vertical, int texture_width)
 {
-	int		tmp;
+	int		flour;
+	float	x;
+
+	if (is_vertical)
+	{
+		flour = floor(end.y / CELL_SIZE) * CELL_SIZE;
+		x = ((end.y - flour) * 100) / 100;
+	}
+	else
+	{
+		flour = floor(end.x / CELL_SIZE) * CELL_SIZE;
+		x = ((end.x - flour) * 100) / 100;
+	}
+	x = (x / CELL_SIZE) * texture_width;
+	return (x);
+}
+
+void	ft_draw_line(t_data *data, t_point end, int vertical,
+		t_directions direction)
+{
+	int		color;
 	int		i;
 	int		distance_projection_plane;
 	double	ray_distance;
 	int		cub_size;
+	double	x;
+	double	wall_size;
+	double	y;
 
+	x = ft_get_x(end, vertical, data->textures[direction]->width);
+	y = 0;
 	i = 0;
 	distance_projection_plane = (WIDTH / 2) / tan(PI / 6);
-	ray_distance = sqrt(pow(end.x - from.x, 2) + pow(end.y - from.y, 2))
-		* cos(((PI / 6) - ((PI / 3) / WIDTH) * data->ray_nb));
+	ray_distance = sqrt(pow(end.x - data->player_point.x, 2) + pow(end.y
+				- data->player_point.y, 2)) * cos(((PI / 6) - ((PI / 3) / WIDTH)
+				* data->ray_nb));
 	cub_size = (CELL_SIZE / ray_distance) * distance_projection_plane;
+	wall_size = cub_size;
 	if (cub_size > HIGH)
+	{
+		y = ((wall_size / 2 - (HIGH / 2)) / wall_size)
+			* data->textures[direction]->height;
 		cub_size = HIGH;
-	if (cub_size < 0)
+	}
+	if (cub_size <= 0)
 		cub_size = 0;
-
-	while (i < (HIGH / 2) - (cub_size / 2))
-	{
-		my_mlx_pixel_put(&data->img, data->ray_nb, i, data->game_config->ceil_color); // ceiling
-		i++;
-	}
-	tmp = i;
-	while (i < tmp + cub_size)
-	{
-		// draw textures
-		direction++;
-		my_mlx_pixel_put(&data->img, data->ray_nb, i, 0xff0fdf);
-		i++;
-	}
 	while (i < HIGH)
 	{
-		my_mlx_pixel_put(&data->img, data->ray_nb, i, data->game_config->floor_color); // floor
+		if (i < (HIGH / 2) - (cub_size / 2))
+			color = data->game_config->ceil_color;
+		else if (i < (HIGH / 2) - (cub_size / 2) + cub_size)
+		{
+			if (y > data->textures[direction]->height)
+				y = data->textures[direction]->height;
+			color = get_color(data->textures[direction], x, y);
+			y += data->textures[direction]->height / wall_size;
+			if (y >= data->textures[direction]->height)
+				y = data->textures[direction]->height;
+		}
+		else
+			color = data->game_config->floor_color;
+		my_mlx_pixel_put(&data->img, data->ray_nb, i, color);
 		i++;
 	}
 }
@@ -138,73 +128,4 @@ int	ft_compare(t_data *data)
 	if (h < v && (data->player_angle))
 		return (1);
 	return (0);
-}
-void	ft_work_(t_data *data)
-{
-	t_directions	direction;
-	t_point			end;
-
-	if (sin(data->player_angle) >= 0)
-		ft_up(data);
-	else
-		ft_down(data);
-	if (ft_compare(data) == 1)
-	{
-		(sin(data->player_angle) >= 0) && (direction = NORTH);
-		(sin(data->player_angle) < 0) && (direction = SOUTH);
-		end = (t_point){data->a_point.x, data->a_point.y};
-	}
-	else
-	{
-		(cos(data->player_angle) >= 0) && (direction = EAST);
-		(cos(data->player_angle) < 0) && (direction = WEST);
-		end = (t_point){data->v_point.x, data->v_point.y};
-	}
-	ft_draw_line(data, data->player_point, end, direction);
-}
-
-void	ft_window(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	data->mlx_ptr = mlx_init();
-	if (!data->mlx_ptr)
-	{
-		printf("\033[0;31mError :\nmlx_init() failed\n");
-		exit(1);
-	}
-	while (data->map[i])
-		i++;
-	data->map_height = i * CELL_SIZE;
-	data->map_width = ft_strlen(data->map[0]) * CELL_SIZE;
-	data->win_ptr = mlx_new_window(data->mlx_ptr, WIDTH, HIGH, "cub3d");
-	data->img.img = mlx_new_image(data->mlx_ptr, WIDTH, HIGH);
-	data->img.addr = mlx_get_data_addr(data->img.img, &data->img.bits_per_pixel,
-			&data->img.line_length, &data->img.endian);
-	ft_rotate(data);
-	mlx_hook(data->win_ptr, 2, 1L << 0, ft_key_press, data);
-	mlx_hook(data->win_ptr, 17, 0, ft_quit, data);
-	mlx_loop(data->mlx_ptr);
-}
-
-void	ft_rotate(t_data *data)
-{
-	double	x;
-	double	j;
-	int		k;
-
-	data->ray_nb = 0;
-	x = data->player_angle;
-	j = data->player_angle + 0.524;
-	k = -1;
-	while (++k < WIDTH)
-	{
-		data->player_angle = j;
-		ft_work_(data);
-		j = j - (PI / 3) / WIDTH;
-		data->ray_nb++;
-	}
-	data->player_angle = x;
-	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.img, 0, 0);
 }
